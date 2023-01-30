@@ -1,5 +1,6 @@
 import { inject, injectable } from "tsyringe"
 import { IUsersRepository } from "../../repositories/IUsersRepository"
+import { hash } from 'bcryptjs'
 
 interface CreateUserData {
   name: string
@@ -15,6 +16,20 @@ export class CreateUserUseCase {
   ) { }
 
   async execute({ email, name, password }: CreateUserData) {
-    await this.usersRepository.create({ email, name, password })
+
+    const emailAlreadyExists = await this.usersRepository.findUserByEmail(email)
+
+    if (emailAlreadyExists) {
+      throw new Error('Email Already exists.')
+    }
+
+    const salt = 8
+    const passwordHash = await hash(password, salt)
+
+    await this.usersRepository.create({
+      email,
+      name,
+      password: passwordHash
+    })
   }
 }
