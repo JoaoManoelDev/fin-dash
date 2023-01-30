@@ -1,6 +1,7 @@
 import dotenv from "dotenv"
-import express from 'express'
 import config from 'config'
+import 'reflect-metadata'
+import express from 'express'
 import './shared/container'
 import { routes } from "./routes"
 

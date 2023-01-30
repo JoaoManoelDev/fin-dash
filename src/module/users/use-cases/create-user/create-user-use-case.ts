@@ -1,4 +1,4 @@
-import { inject } from "tsyringe"
+import { inject, injectable } from "tsyringe"
 import { IUsersRepository } from "../../repositories/IUsersRepository"
 
 interface CreateUserData {
@@ -7,6 +7,7 @@ interface CreateUserData {
   password: string
 }
 
+@injectable()
 export class CreateUserUseCase {
   constructor(
     @inject('IUsersRepository')
