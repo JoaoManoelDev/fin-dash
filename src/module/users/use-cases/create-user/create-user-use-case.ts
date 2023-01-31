@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe"
 import { IUsersRepository } from "../../repositories/IUsersRepository"
 import { hash } from 'bcryptjs'
+import { AppError } from "../../../../error/app-error"
 
 interface CreateUserData {
   name: string
@@ -20,7 +21,7 @@ export class CreateUserUseCase {
     const emailAlreadyExists = await this.usersRepository.findUserByEmail(email)
 
     if (emailAlreadyExists) {
-      throw new Error('Email Already exists.')
+      throw new AppError('Email Already exists.')
     }
 
     const salt = 8
