@@ -1,7 +1,7 @@
-import { inject, injectable } from "tsyringe"
-import { IUsersRepository } from "../../repositories/IUsersRepository"
+import { inject, injectable } from 'tsyringe'
+import { IUsersRepository } from '../../repositories/IUsersRepository'
 import { hash } from 'bcryptjs'
-import { AppError } from "../../../../error/app-error"
+import { AppError } from '../../../../error/app-error'
 
 interface CreateUserData {
   name: string
@@ -13,11 +13,10 @@ interface CreateUserData {
 export class CreateUserUseCase {
   constructor(
     @inject('IUsersRepository')
-    private usersRepository: IUsersRepository
-  ) { }
+    private usersRepository: IUsersRepository,
+  ) {}
 
   async execute({ email, name, password }: CreateUserData) {
-
     const emailAlreadyExists = await this.usersRepository.findUserByEmail(email)
 
     if (emailAlreadyExists) {
@@ -30,7 +29,7 @@ export class CreateUserUseCase {
     await this.usersRepository.create({
       email,
       name,
-      password: passwordHash
+      password: passwordHash,
     })
   }
 }
