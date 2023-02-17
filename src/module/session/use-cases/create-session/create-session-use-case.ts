@@ -29,8 +29,6 @@ export class CreateSessionUseCase {
       return new AppError('Incorrect email or password.', 401)
     }
 
-    console.log(process.env.TOKEN_SECRET)
-
     if (!process.env.TOKEN_SECRET) {
       return new AppError('Not found token secret.', 404)
     }

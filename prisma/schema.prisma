@@ -8,11 +8,24 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid())
-  name     String
-  email    String
-  password String
+  id          String        @id @default(uuid())
+  name        String
+  email       String
+  password    String
+  Transaction Transaction[]
 
   @@unique([email])
   @@map("users")
+}
+
+model Transaction {
+  id          String   @id @default(uuid())
+  description String
+  type        String
+  category    String
+  price       Int
+  user_id     String
+  created_at  DateTime @default(now())
+
+  user User @relation(fields: [user_id], references: [id])
 }
